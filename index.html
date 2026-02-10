@@ -46,11 +46,6 @@ h1 {
     margin-bottom: 20px;
 }
 
-p {
-    color: #444;
-    font-size: 18px;
-}
-
 .buttons {
     margin-top: 25px;
     display: flex;
@@ -64,7 +59,6 @@ button {
     border-radius: 15px;
     font-size: 16px;
     cursor: pointer;
-    transition: transform 0.3s ease;
 }
 
 #yes {
@@ -81,7 +75,7 @@ button {
     display: none;
 }
 
-/* Pantalla negra final */
+/* Pantalla negra */
 #cinema {
     position: fixed;
     inset: 0;
@@ -110,39 +104,33 @@ button {
 }
 
 @keyframes fadeText {
-    from {
-        opacity: 0;
-        transform: scale(0.95);
-    }
-    to {
-        opacity: 1;
-        transform: scale(1);
-    }
+    from { opacity: 0; transform: scale(0.95); }
+    to { opacity: 1; transform: scale(1); }
 }
 </style>
 </head>
 
 <body>
 
-<!-- Música -->
-<audio id="music" loop>
+<!-- Audio -->
+<audio id="music" preload="auto" loop>
     <source src="un-pikito.mp3" type="audio/mpeg">
 </audio>
 
 <!-- Corazones -->
 <script>
-for (let i = 0; i < 18; i++) {
+for (let i = 0; i < 16; i++) {
     const heart = document.createElement("div");
     heart.className = "heart";
     heart.innerHTML = "❤️";
     heart.style.left = Math.random() * 100 + "vw";
     heart.style.animationDuration = (6 + Math.random() * 4) + "s";
-    heart.style.fontSize = (16 + Math.random() * 24) + "px";
+    heart.style.fontSize = (16 + Math.random() * 22) + "px";
     document.body.appendChild(heart);
 }
 </script>
 
-<!-- Pantalla pregunta -->
+<!-- Pregunta -->
 <div class="card" id="question">
     <h1>💖 Valeria, ¿quieres ser mi San Valentín? 💖</h1>
     <div class="buttons">
@@ -151,9 +139,9 @@ for (let i = 0; i < 18; i++) {
     </div>
 </div>
 
-<!-- Pantalla negra tipo película -->
+<!-- Final -->
 <div id="cinema">
-    <h1>Te AMO</h1>
+    <h1>TE AMO</h1>
 </div>
 
 <script>
@@ -164,27 +152,42 @@ const question = document.getElementById("question");
 const cinema = document.getElementById("cinema");
 const music = document.getElementById("music");
 
+/* 🔊 Reproducir música de forma segura */
 function playMusic() {
-    if (music.paused) music.play();
+    music.volume = 1;
+    const playPromise = music.play();
+    if (playPromise !== undefined) {
+        playPromise.catch(() => {
+            console.log("Audio bloqueado hasta interacción");
+        });
+    }
 }
 
+/* 🫀 Vibración latido */
+function vibrarLatido() {
+    if (navigator.vibrate) {
+        navigator.vibrate([120,80,120,300,120,80,120,300,120,80,120]);
+    }
+}
+
+/* NO */
 no.addEventListener("click", () => {
     playMusic();
     scale += 0.2;
     yes.style.transform = `scale(${scale})`;
 });
 
+/* SÍ */
 yes.addEventListener("click", () => {
     playMusic();
     question.classList.add("hidden");
 
     setTimeout(() => {
         cinema.classList.add("show");
+        vibrarLatido();
     }, 800);
 });
 </script>
 
 </body>
 </html>
-
-
