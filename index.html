@@ -1,149 +1,148 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>San Valentín ❤️</title>
-  <style>
-    body {
-      margin: 0;
-      font-family: 'Arial', sans-serif;
-      background: linear-gradient(135deg, #ff758c, #ff7eb3);
-      height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: white;
-      overflow: hidden;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Invitación Especial</title>
 
-    .screen {
-      display: none;
-      text-align: center;
-      padding: 20px;
-    }
+<style>
+body {
+    margin: 0;
+    height: 100vh;
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(135deg, #ffb6c1, #ff4d6d);
+    overflow: hidden;
+}
 
-    .active {
-      display: block;
-    }
+.heart {
+    position: absolute;
+    color: rgba(255,255,255,0.6);
+    animation: float 8s linear infinite;
+}
 
-    h1 {
-      font-size: 2.2rem;
-      margin-bottom: 30px;
-    }
+@keyframes float {
+    0% { transform: translateY(100vh); opacity: 0; }
+    20% { opacity: 1; }
+    100% { transform: translateY(-10vh); opacity: 0; }
+}
 
-    .buttons {
-      display: flex;
-      gap: 20px;
-      justify-content: center;
-      flex-wrap: wrap;
-    }
+.card {
+    background: white;
+    padding: 30px;
+    border-radius: 25px;
+    text-align: center;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.25);
+    max-width: 320px;
+    z-index: 1;
+}
 
-    button {
-      border: none;
-      padding: 15px 30px;
-      font-size: 1.2rem;
-      border-radius: 30px;
-      cursor: pointer;
-      transition: all 0.3s ease;
-    }
+h1 {
+    color: #ff4d6d;
+    margin-bottom: 20px;
+}
 
-    #yesBtn {
-      background-color: #ff4d6d;
-      color: white;
-    }
+p {
+    color: #444;
+    font-size: 18px;
+}
 
-    #noBtn {
-      background-color: white;
-      color: #ff4d6d;
-    }
+.buttons {
+    margin-top: 25px;
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
 
-    #finalScreen {
-      background: black;
-      position: fixed;
-      inset: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-direction: column;
-      font-size: 2.5rem;
-      letter-spacing: 2px;
-    }
+button {
+    border: none;
+    padding: 12px 24px;
+    border-radius: 15px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
 
-    .fade {
-      animation: fadeIn 3s ease-in-out forwards;
-    }
+#yes {
+    background: #ff4d6d;
+    color: white;
+    font-weight: bold;
+}
 
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
-    }
-  </style>
+#no {
+    background: #ddd;
+}
+
+.hidden {
+    display: none;
+}
+</style>
 </head>
+
 <body>
 
-  <!-- Música -->
-  <audio id="music" loop>
-    <source src="Un Pikito.mp3" type="audio/mpeg" />
-    Tu navegador no soporta audio.
-  </audio>
+<!-- Música -->
+<audio id="music" loop>
+    <source src="Un Pikito.mp3" type="audio/mpeg">
+</audio>
 
-  <!-- Pantalla 1 -->
-  <div id="screen1" class="screen active">
-    <h1>Valeria ¿quieres ser mi San Valentín? ❤️</h1>
+<!-- Corazones -->
+<script>
+for (let i = 0; i < 18; i++) {
+    const heart = document.createElement("div");
+    heart.className = "heart";
+    heart.innerHTML = "❤️";
+    heart.style.left = Math.random() * 100 + "vw";
+    heart.style.animationDuration = (6 + Math.random() * 4) + "s";
+    heart.style.fontSize = (16 + Math.random() * 24) + "px";
+    document.body.appendChild(heart);
+}
+</script>
+
+<!-- Pantalla pregunta -->
+<div class="card" id="question">
+    <h1>💖 Valeria, ¿quieres ser mi San Valentín? 💖</h1>
     <div class="buttons">
-      <button id="yesBtn">Sí 💖</button>
-      <button id="noBtn">No 💔</button>
+        <button id="yes">Sí 💕</button>
+        <button id="no">No 🙈</button>
     </div>
-  </div>
+</div>
 
-  <!-- Pantalla 2 -->
-  <div id="screen2" class="screen">
-    <h1>💘 Felicidades 💘</h1>
-    <p>Nos vemos en:</p>
-    <p><strong>Lugar:</strong> (Tu lugar)</p>
-    <p><strong>Fecha:</strong> (Fecha)</p>
-    <p><strong>Hora:</strong> (Hora)</p>
-    <p>TE AMO ❤️</p>
-  </div>
+<!-- Pantalla final -->
+<div class="card hidden" id="final">
+    <h1>❤️ Es una cita ❤️</h1>
+    <p>Sábado 14 de febrero</p>
+    <p style="font-size:22px; color:#ff4d6d;"><strong>TE AMOOOOOO ❤️❤️❤️</strong></p>
+</div>
 
-  <!-- Pantalla Final -->
-  <div id="finalScreen" class="screen">
-    <div class="fade">Te amo</div>
-  </div>
+<script>
+let scale = 1;
+const yes = document.getElementById("yes");
+const no = document.getElementById("no");
+const question = document.getElementById("question");
+const final = document.getElementById("final");
+const music = document.getElementById("music");
 
-  <script>
-    const yesBtn = document.getElementById('yesBtn');
-    const noBtn = document.getElementById('noBtn');
-    const screen1 = document.getElementById('screen1');
-    const screen2 = document.getElementById('screen2');
-    const finalScreen = document.getElementById('finalScreen');
-    const music = document.getElementById('music');
+function playMusic() {
+    if (music.paused) {
+        music.play();
+    }
+}
 
-    let scale = 1;
+no.addEventListener("click", () => {
+    playMusic();
+    scale += 0.2;
+    yes.style.transform = `scale(${scale})`;
+});
 
-    // Reproducir música al primer clic (requisito del navegador)
-    document.body.addEventListener('click', () => {
-      if (music.paused) {
-        music.play().catch(() => {});
-      }
-    }, { once: true });
-
-    noBtn.addEventListener('click', () => {
-      scale += 0.2;
-      yesBtn.style.transform = `scale(${scale})`;
-    });
-
-    yesBtn.addEventListener('click', () => {
-      screen1.classList.remove('active');
-      screen2.classList.add('active');
-
-      setTimeout(() => {
-        screen2.classList.remove('active');
-        finalScreen.classList.add('active');
-      }, 4000);
-    });
-  </script>
+yes.addEventListener("click", () => {
+    playMusic();
+    question.classList.add("hidden");
+    final.classList.remove("hidden");
+});
+</script>
 
 </body>
 </html>
