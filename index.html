@@ -1,159 +1,137 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Invitación Especial</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Invitación Especial</title>
 
-    <style>
-        body {
-            margin: 0;
-            padding: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-            background-color: #f8f9fa;
-            font-family: Arial, sans-serif;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
+<style>
+body {
+    margin: 0;
+    height: 100vh;
+    font-family: 'Arial', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(135deg, #ffb6c1, #ff4d6d);
+    overflow: hidden;
+}
 
-        .collage {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            display: flex;
-            flex-wrap: wrap;
-            gap: 5px;
-            padding: 10px;
-            justify-content: center;
-            align-items: center;
-            z-index: 0;
-        }
+/* Corazones flotando */
+.heart {
+    position: absolute;
+    color: rgba(255,255,255,0.6);
+    font-size: 20px;
+    animation: float 8s linear infinite;
+}
 
-        .collage img {
-            width: calc(25% - 10px);
-            height: auto;
-            object-fit: cover;
-            border-radius: 5px;
-            box-shadow: 2px 2px 8px rgba(0,0,0,0.2);
-            transform: rotate(var(--angle));
-        }
+@keyframes float {
+    0% { transform: translateY(100vh); opacity: 0; }
+    20% { opacity: 1; }
+    100% { transform: translateY(-10vh); opacity: 0; }
+}
 
-        .mensaje {
-            background: rgba(255, 255, 255, 0.9);
-            padding: 25px;
-            border-radius: 20px;
-            box-shadow: 0 6px 15px rgba(0,0,0,0.25);
-            position: relative;
-            z-index: 1;
-            max-width: 320px;
-        }
+/* Tarjeta */
+.card {
+    background: white;
+    padding: 30px;
+    border-radius: 25px;
+    text-align: center;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.25);
+    max-width: 320px;
+    z-index: 1;
+}
 
-        h1 {
-            color: #d63384;
-            margin-bottom: 15px;
-        }
+h1 {
+    color: #ff4d6d;
+    margin-bottom: 20px;
+}
 
-        p {
-            font-size: 18px;
-            color: #333;
-        }
+p {
+    color: #444;
+    font-size: 18px;
+}
 
-        .botones {
-            margin-top: 20px;
-            display: flex;
-            gap: 15px;
-            justify-content: center;
-        }
+.buttons {
+    margin-top: 25px;
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
 
-        button {
-            border: none;
-            padding: 12px 22px;
-            border-radius: 12px;
-            font-size: 16px;
-            cursor: pointer;
-            transition: transform 0.3s ease;
-        }
+button {
+    border: none;
+    padding: 12px 24px;
+    border-radius: 15px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
 
-        #btnSi {
-            background-color: #ff4d6d;
-            color: white;
-            font-weight: bold;
-        }
+#yes {
+    background: #ff4d6d;
+    color: white;
+    font-weight: bold;
+}
 
-        #btnNo {
-            background-color: #ccc;
-            color: #333;
-        }
+#no {
+    background: #ddd;
+}
 
-        .oculto {
-            display: none;
-        }
-    </style>
+.hidden {
+    display: none;
+}
+</style>
 </head>
 
 <body>
 
-    <!-- Collage -->
-    <div class="collage">
-        <img src="1.jpeg" style="--angle:-5deg;">
-        <img src="2.jpeg" style="--angle:5deg;">
-        <img src="3.jpeg" style="--angle:-10deg;">
-        <img src="4.jpeg" style="--angle:10deg;">
-        <img src="5.jpeg" style="--angle:-15deg;">
-        <img src="6.jpeg" style="--angle:15deg;">
-        <img src="7.jpeg" style="--angle:-7deg;">
-        <img src="8.jpeg" style="--angle:7deg;">
-        <img src="9.jpeg" style="--angle:-12deg;">
-        <img src="10.jpeg" style="--angle:12deg;">
-        <img src="11.jpeg" style="--angle:-3deg;">
-        <img src="12.jpeg" style="--angle:3deg;">
-        <img src="13.jpeg" style="--angle:-8deg;">
-        <img src="14.jpeg" style="--angle:8deg;">
-        <img src="15.jpeg" style="--angle:-6deg;">
-        <img src="16.jpeg" style="--angle:6deg;">
+<!-- Corazones -->
+<script>
+for (let i = 0; i < 15; i++) {
+    const heart = document.createElement("div");
+    heart.className = "heart";
+    heart.innerHTML = "❤️";
+    heart.style.left = Math.random() * 100 + "vw";
+    heart.style.animationDuration = (6 + Math.random() * 4) + "s";
+    heart.style.fontSize = (16 + Math.random() * 20) + "px";
+    document.body.appendChild(heart);
+}
+</script>
+
+<!-- Pantalla pregunta -->
+<div class="card" id="question">
+    <h1>💖 Valeria, ¿quieres ser mi San Valentín? 💖</h1>
+    <div class="buttons">
+        <button id="yes">Sí 💕</button>
+        <button id="no">No 🙈</button>
     </div>
+</div>
 
-    <!-- Pantalla 1 -->
-    <div class="mensaje" id="pantallaPregunta">
-        <h1>💖 ¿Quieres ser mi San Valentín? 💖</h1>
+<!-- Pantalla final -->
+<div class="card hidden" id="final">
+    <h1>❤️ Es una cita ❤️</h1>
+    <p>Sábado 14 de febrero</p>
+    <p style="font-size:22px; color:#ff4d6d;"><strong>TE AMOOOOOO ❤️❤️❤️</strong></p>
+</div>
 
-        <div class="botones">
-            <button id="btnSi">Sí 💕</button>
-            <button id="btnNo">No 🙈</button>
-        </div>
-    </div>
+<script>
+let scale = 1;
+const yes = document.getElementById("yes");
+const no = document.getElementById("no");
+const question = document.getElementById("question");
+const final = document.getElementById("final");
 
-    <!-- Pantalla final -->
-    <div class="mensaje oculto" id="pantallaFinal">
-        <h1>❤️ ¿Quieres ser mi San valentin? ❤️</h1>
-        <p> Sabado 14 de febrero </p>
-      <p style="font-size:22px; color:#ff4d6d;"><strong>TE AMOOOOOO ❤️❤️❤️</strong></p>
-    </div>
+no.addEventListener("click", () => {
+    scale += 0.2;
+    yes.style.transform = `scale(${scale})`;
+});
 
-    <script>
-        let escala = 1;
-        const btnSi = document.getElementById("btnSi");
-        const btnNo = document.getElementById("btnNo");
-        const pregunta = document.getElementById("pantallaPregunta");
-        const final = document.getElementById("pantallaFinal");
-
-        btnNo.addEventListener("click", () => {
-            escala += 0.2;
-            btnSi.style.transform = `scale(${escala})`;
-        });
-
-        btnSi.addEventListener("click", () => {
-            pregunta.classList.add("oculto");
-            final.classList.remove("oculto");
-        });
-    </script>
+yes.addEventListener("click", () => {
+    question.classList.add("hidden");
+    final.classList.remove("hidden");
+});
+</script>
 
 </body>
 </html>
-
