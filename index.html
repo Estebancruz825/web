@@ -17,6 +17,7 @@ body {
     overflow: hidden;
 }
 
+/* Corazones */
 .heart {
     position: absolute;
     color: rgba(255,255,255,0.6);
@@ -29,6 +30,7 @@ body {
     100% { transform: translateY(-10vh); opacity: 0; }
 }
 
+/* Tarjeta */
 .card {
     background: white;
     padding: 30px;
@@ -36,7 +38,7 @@ body {
     text-align: center;
     box-shadow: 0 10px 25px rgba(0,0,0,0.25);
     max-width: 320px;
-    z-index: 1;
+    z-index: 2;
 }
 
 h1 {
@@ -78,6 +80,45 @@ button {
 .hidden {
     display: none;
 }
+
+/* Pantalla negra final */
+#cinema {
+    position: fixed;
+    inset: 0;
+    background: black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 2s ease;
+}
+
+#cinema.show {
+    opacity: 1;
+    pointer-events: all;
+}
+
+#cinema h1 {
+    color: white;
+    font-size: 60px;
+    letter-spacing: 4px;
+    opacity: 0;
+    animation: fadeText 3s ease forwards;
+    animation-delay: 1s;
+}
+
+@keyframes fadeText {
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
 </style>
 </head>
 
@@ -85,7 +126,7 @@ button {
 
 <!-- Música -->
 <audio id="music" loop>
-    <source src="Un Pikito.mp3" type="audio/mpeg">
+    <source src="un-pikito.mp3" type="audio/mpeg">
 </audio>
 
 <!-- Corazones -->
@@ -110,11 +151,9 @@ for (let i = 0; i < 18; i++) {
     </div>
 </div>
 
-<!-- Pantalla final -->
-<div class="card hidden" id="final">
-    <h1>❤️ Es una cita ❤️</h1>
-    <p>Sábado 14 de febrero</p>
-    <p style="font-size:22px; color:#ff4d6d;"><strong>TE AMOOOOOO ❤️❤️❤️</strong></p>
+<!-- Pantalla negra tipo película -->
+<div id="cinema">
+    <h1>Te amo</h1>
 </div>
 
 <script>
@@ -122,13 +161,11 @@ let scale = 1;
 const yes = document.getElementById("yes");
 const no = document.getElementById("no");
 const question = document.getElementById("question");
-const final = document.getElementById("final");
+const cinema = document.getElementById("cinema");
 const music = document.getElementById("music");
 
 function playMusic() {
-    if (music.paused) {
-        music.play();
-    }
+    if (music.paused) music.play();
 }
 
 no.addEventListener("click", () => {
@@ -140,9 +177,13 @@ no.addEventListener("click", () => {
 yes.addEventListener("click", () => {
     playMusic();
     question.classList.add("hidden");
-    final.classList.remove("hidden");
+
+    setTimeout(() => {
+        cinema.classList.add("show");
+    }, 800);
 });
 </script>
 
 </body>
 </html>
+
