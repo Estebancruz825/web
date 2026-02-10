@@ -1,193 +1,149 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Invitación Especial</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>San Valentín ❤️</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Arial', sans-serif;
+      background: linear-gradient(135deg, #ff758c, #ff7eb3);
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      overflow: hidden;
+    }
 
-<style>
-body {
-    margin: 0;
-    height: 100vh;
-    font-family: Arial, sans-serif;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background: linear-gradient(135deg, #ffb6c1, #ff4d6d);
-    overflow: hidden;
-}
+    .screen {
+      display: none;
+      text-align: center;
+      padding: 20px;
+    }
 
-/* Corazones */
-.heart {
-    position: absolute;
-    color: rgba(255,255,255,0.6);
-    animation: float 8s linear infinite;
-}
+    .active {
+      display: block;
+    }
 
-@keyframes float {
-    0% { transform: translateY(100vh); opacity: 0; }
-    20% { opacity: 1; }
-    100% { transform: translateY(-10vh); opacity: 0; }
-}
+    h1 {
+      font-size: 2.2rem;
+      margin-bottom: 30px;
+    }
 
-/* Tarjeta */
-.card {
-    background: white;
-    padding: 30px;
-    border-radius: 25px;
-    text-align: center;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.25);
-    max-width: 320px;
-    z-index: 2;
-}
+    .buttons {
+      display: flex;
+      gap: 20px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
 
-h1 {
-    color: #ff4d6d;
-    margin-bottom: 20px;
-}
+    button {
+      border: none;
+      padding: 15px 30px;
+      font-size: 1.2rem;
+      border-radius: 30px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
 
-.buttons {
-    margin-top: 25px;
-    display: flex;
-    justify-content: center;
-    gap: 15px;
-}
+    #yesBtn {
+      background-color: #ff4d6d;
+      color: white;
+    }
 
-button {
-    border: none;
-    padding: 12px 24px;
-    border-radius: 15px;
-    font-size: 16px;
-    cursor: pointer;
-}
+    #noBtn {
+      background-color: white;
+      color: #ff4d6d;
+    }
 
-#yes {
-    background: #ff4d6d;
-    color: white;
-    font-weight: bold;
-}
+    #finalScreen {
+      background: black;
+      position: fixed;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      font-size: 2.5rem;
+      letter-spacing: 2px;
+    }
 
-#no {
-    background: #ddd;
-}
+    .fade {
+      animation: fadeIn 3s ease-in-out forwards;
+    }
 
-.hidden {
-    display: none;
-}
-
-/* Pantalla negra */
-#cinema {
-    position: fixed;
-    inset: 0;
-    background: black;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 10;
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 2s ease;
-}
-
-#cinema.show {
-    opacity: 1;
-    pointer-events: all;
-}
-
-#cinema h1 {
-    color: white;
-    font-size: 60px;
-    letter-spacing: 4px;
-    opacity: 0;
-    animation: fadeText 3s ease forwards;
-    animation-delay: 1s;
-}
-
-@keyframes fadeText {
-    from { opacity: 0; transform: scale(0.95); }
-    to { opacity: 1; transform: scale(1); }
-}
-</style>
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+  </style>
 </head>
-
 <body>
 
-<!-- Audio -->
-<audio id="music" preload="auto" loop>
-    <source src="un-pikito.mp3" type="audio/mpeg">
-</audio>
+  <!-- Música -->
+  <audio id="music" loop>
+    <source src="Un Pikito.mp3" type="audio/mpeg" />
+    Tu navegador no soporta audio.
+  </audio>
 
-<!-- Corazones -->
-<script>
-for (let i = 0; i < 16; i++) {
-    const heart = document.createElement("div");
-    heart.className = "heart";
-    heart.innerHTML = "❤️";
-    heart.style.left = Math.random() * 100 + "vw";
-    heart.style.animationDuration = (6 + Math.random() * 4) + "s";
-    heart.style.fontSize = (16 + Math.random() * 22) + "px";
-    document.body.appendChild(heart);
-}
-</script>
-
-<!-- Pregunta -->
-<div class="card" id="question">
-    <h1>💖 Valeria, ¿quieres ser mi San Valentín? 💖</h1>
+  <!-- Pantalla 1 -->
+  <div id="screen1" class="screen active">
+    <h1>Valeria ¿quieres ser mi San Valentín? ❤️</h1>
     <div class="buttons">
-        <button id="yes">Sí 💕</button>
-        <button id="no">No 🙈</button>
+      <button id="yesBtn">Sí 💖</button>
+      <button id="noBtn">No 💔</button>
     </div>
-</div>
+  </div>
 
-<!-- Final -->
-<div id="cinema">
-    <h1>TE AMO</h1>
-</div>
+  <!-- Pantalla 2 -->
+  <div id="screen2" class="screen">
+    <h1>💘 Felicidades 💘</h1>
+    <p>Nos vemos en:</p>
+    <p><strong>Lugar:</strong> (Tu lugar)</p>
+    <p><strong>Fecha:</strong> (Fecha)</p>
+    <p><strong>Hora:</strong> (Hora)</p>
+    <p>TE AMO ❤️</p>
+  </div>
 
-<script>
-let scale = 1;
-const yes = document.getElementById("yes");
-const no = document.getElementById("no");
-const question = document.getElementById("question");
-const cinema = document.getElementById("cinema");
-const music = document.getElementById("music");
+  <!-- Pantalla Final -->
+  <div id="finalScreen" class="screen">
+    <div class="fade">Te amo</div>
+  </div>
 
-/* 🔊 Reproducir música de forma segura */
-function playMusic() {
-    music.volume = 1;
-    const playPromise = music.play();
-    if (playPromise !== undefined) {
-        playPromise.catch(() => {
-            console.log("Audio bloqueado hasta interacción");
-        });
-    }
-}
+  <script>
+    const yesBtn = document.getElementById('yesBtn');
+    const noBtn = document.getElementById('noBtn');
+    const screen1 = document.getElementById('screen1');
+    const screen2 = document.getElementById('screen2');
+    const finalScreen = document.getElementById('finalScreen');
+    const music = document.getElementById('music');
 
-/* 🫀 Vibración latido */
-function vibrarLatido() {
-    if (navigator.vibrate) {
-        navigator.vibrate([120,80,120,300,120,80,120,300,120,80,120]);
-    }
-}
+    let scale = 1;
 
-/* NO */
-no.addEventListener("click", () => {
-    playMusic();
-    scale += 0.2;
-    yes.style.transform = `scale(${scale})`;
-});
+    // Reproducir música al primer clic (requisito del navegador)
+    document.body.addEventListener('click', () => {
+      if (music.paused) {
+        music.play().catch(() => {});
+      }
+    }, { once: true });
 
-/* SÍ */
-yes.addEventListener("click", () => {
-    playMusic();
-    question.classList.add("hidden");
+    noBtn.addEventListener('click', () => {
+      scale += 0.2;
+      yesBtn.style.transform = `scale(${scale})`;
+    });
 
-    setTimeout(() => {
-        cinema.classList.add("show");
-        vibrarLatido();
-    }, 800);
-});
-</script>
+    yesBtn.addEventListener('click', () => {
+      screen1.classList.remove('active');
+      screen2.classList.add('active');
+
+      setTimeout(() => {
+        screen2.classList.remove('active');
+        finalScreen.classList.add('active');
+      }, 4000);
+    });
+  </script>
 
 </body>
 </html>
